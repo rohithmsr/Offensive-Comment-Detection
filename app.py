@@ -11,6 +11,10 @@ import boto3
 import tensorflow as tf
 from transformers import BertTokenizer
 
+from fastapi.middleware.cors import CORSMiddleware
+
+
+
 AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
 LABEL_COLUMNS = ['toxic','severe_toxic','obscene','threat','insult','identity_hate']
@@ -69,18 +73,47 @@ tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
 
 app = FastAPI()
 
+origins = ["https://www.youtube.com","http://localhost","http://localhost:8000",]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+
 @app.get("/")
 async def root():
+    print("hiiiiiiiiiiii")
     return {"message": "Hello from ATF API! Aabaasam Thavirpom Friends!"}
+
 
 @app.post("/predict")
 async def create_item(comment: Comment):
+
     predictions = dict.fromkeys(LABEL_COLUMNS, 0)
+    predictions['offensive'] = 0
+    predictions['comment_id'] = comment.comment_id
 
     processed_data = prepare_data(comment.text, tokenizer)
     probs = model.predict(processed_data)[0]
 
     for i in range(len(probs)):
         predictions[LABEL_COLUMNS[i]] = 1 if probs[i] >= 0.5 else 0
+
+        if(predictions[LABEL_COLUMNS[i]] == 1):
+            predictions['offensive'] = 1
 
     return predictions
