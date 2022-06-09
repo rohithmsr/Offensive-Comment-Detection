@@ -2,6 +2,7 @@
 model/
 bert-model-files/
 downloaded-bert-model-files/
+*.h5
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

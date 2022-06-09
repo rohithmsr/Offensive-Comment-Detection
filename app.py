@@ -61,11 +61,10 @@ s3 = boto3.resource(
 # download_s3_folder(s3, 'test-rohith-1', 'bert-model-files')
 
 # Download the file
-# s3.Bucket('test-rohith-1').download_file('bert-model-files/my_model_atf.h5', 'model/my_model_atf.h5')
+s3.Bucket('test-rohith-1').download_file('bert-model-files/my_model_atf.h5', 'model/my_model_atf.h5')
 
 ## 2. Initialize the model and tokenizer!
-# model = tf.keras.models.load_model('bert-model-files')
-model = tf.keras.models.load_model('downloaded-bert-model-files')
+model = tf.keras.models.load_model('model/my_model_atf.h5')
 tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
 
 app = FastAPI()
@@ -74,7 +73,7 @@ app = FastAPI()
 async def root():
     return {"message": "Hello from ATF API! Aabaasam Thavirpom Friends!"}
 
-@app.post("/predict/")
+@app.post("/predict")
 async def create_item(comment: Comment):
     predictions = dict.fromkeys(LABEL_COLUMNS, 0)
 
