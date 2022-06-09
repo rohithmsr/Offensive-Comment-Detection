@@ -1,5 +1,4 @@
 # Model folder
-model/
 bert-model-files/
 downloaded-bert-model-files/
 *.h5
