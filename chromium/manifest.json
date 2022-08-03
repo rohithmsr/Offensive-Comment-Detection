@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "acd extension",
+  "version": "1.0.0",
+  "permissions": [
+    "tabs",
+    "<all_urls>",
+    "activeTab",
+    "storage",
+    "https://*.youtube.com/",
+    "http://127.0.0.1:8000/predict"
+  ],
+  "host_permissions": ["http://127.0.0.1/", "https://*.youtube.com/"],
+  "content_scripts": [
+    {
+      "matches": ["https://*.youtube.com/*"],
+
+      "js": ["libs/jquery-3.6.0.min.js", "contents/app.js"],
+
+      "css": ["contents/app.css"]
+    },
+    {
+      "matches": ["https://*/*"],
+
+      "js": ["libs/jquery-3.6.0.min.js"],
+      "css": []
+    }
+  ],
+  "permissions": ["tabs", "activeTab"]
+}
