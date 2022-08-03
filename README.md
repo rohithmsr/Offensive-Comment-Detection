@@ -5,3 +5,5 @@ About 20% of the suicides among children are reported due to online or cyber bul
 
 The purpose of abusive language detection is to determine whether the web platform is safe for all kind of users from abusive or inappropriate language.
 It is useful in detecting the abusive or inappropriate language and prevent it from user interface.
+
+Preview = https://drive.google.com/file/d/1XZeeWHtYJlo4Rkq8haI6OsHyyKcDVJEK/view?usp=sharing
